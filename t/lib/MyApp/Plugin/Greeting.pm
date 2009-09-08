@@ -1,4 +1,4 @@
-package MyCLI::Plugin::Greeting;
+package MyApp::Plugin::Greeting;
 
 use strict;
 

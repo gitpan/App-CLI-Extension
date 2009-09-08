@@ -8,27 +8,27 @@ App::CLI::Extension - for App::CLI extension module
 
 =head1 VERSION
 
-0.01
+0.1
 
 =head1 SYNOPSIS
 
-  # YourApp.pm
-  package YourApp;
+  # MyApp.pm
+  package MyApp;
 
   use strict;
   use base qw(App::CLI::Extension);
 
   # extension method
-  # load App::CLI::Plugin::Foo,  YourApp::Plugin::Bar
-  __PACKAGE__->load_plugins(qw(Foo +YourApp::Plugin::Bar));
+  # load App::CLI::Plugin::Foo,  MyApp::Plugin::Bar
+  __PACKAGE__->load_plugins(qw(Foo +MyApp::Plugin::Bar));
   
   # extension method
   __PACKAGE__->config( name => "kurt");
   
   1;
 
-  # YourApp/Hello.pm
-  package YourApp:Hello;
+  # MyApp/Hello.pm
+  package MyApp::Hello;
 
   use strict;
   use base qw(App::CLI::Command);
@@ -42,16 +42,16 @@ App::CLI::Extension - for App::CLI extension module
       print "age is " . "$self->{age}\n";
   }
 
-  # yourapp
+  # myapp
   #!/usr/bin/perl
 
   use strict;
-  use YourApp;
+  use MyApp;
 
-  YourApp->dispatch;
+  MyApp->dispatch;
 
   # execute
-  [kurt@localhost ~] youapp hello --age=27
+  [kurt@localhost ~] myapp hello --age=27
   Hello! my name is kurt
   age is 27
 
@@ -61,17 +61,17 @@ The expansion module which added plug in, initial setting mechanism to App::CLI
 
 App::CLI::Extension::Component::** modules is automatic, and it is done require
 
-(It is now App::CLI::Extension::Component::Config is automatic, and it is done require)
+(It is now Config and Stash is automatic, and it is done require)
 
 =cut
 
 use strict;
 use base qw(App::CLI Class::Data::Inheritable);
-use 5.8.0;
+use 5.008;
 use Module::Pluggable::Object;
 use UNIVERSAL::require;
 
-our $VERSION         = 0.01;
+our $VERSION = '0.1';
 
 __PACKAGE__->mk_classdata("_plugins" => []);
 __PACKAGE__->mk_classdata("_config"  => {});
@@ -87,9 +87,6 @@ sub import {
 
     my $class = shift;
     my $finder = Module::Pluggable::Object->new(search_path => __PACKAGE__ . "::Component", require => 1);
-    foreach my $component($finder->plugins){
-        $component->require or die "component load error: $UNIVERSAL::require::ERROR";
-    }
     $class->_components([$finder->plugins]);
 }
 
@@ -102,7 +99,7 @@ sub prepare {
         my $pkg = ref($cmd);
 
         # component and plugin setup
-        unshift @{"$pkg\::ISA"}, @{$class->_components}, @{$class->_plugins};
+        push @{"$pkg\::ISA"}, @{$class->_components}, @{$class->_plugins};
         $cmd->config($class->_config);
         $cmd->setup if $cmd->can("setup");
     }
@@ -113,16 +110,16 @@ sub prepare {
 
 =head2 load_plugins
 
-load and require plugins
+auto load and require plugin modules
 
 Example
 
-  # YourApp.pm
-  # YourApp::Plugin::GoodMorning and App::CLI::Plugin::Config::YAML::Syck require
-  __PACKAGE__->load_plugins(qw(+YourApp::Plugin::GoodMorning Config::YAML::Syck));
+  # MyApp.pm
+  # MyApp::Plugin::GoodMorning and App::CLI::Plugin::Config::YAML::Syck require
+  __PACKAGE__->load_plugins(qw(+MyApp::Plugin::GoodMorning Config::YAML::Syck));
   
   # Your/App/Plugin/GoodMorning.pm
-  package YourApp::Plugin::GoodMorning;
+  package MyApp::Plugin::GoodMorning;
 
   use strict;
   
@@ -132,8 +129,8 @@ Example
       print "Good monring!\n";
   }
 
-  # YourApp/Hello.pm
-  package YourApp:Hello;
+  # MyApp/Hello.pm
+  package MyApp:Hello;
 
   use strict;
   use base qw(App::CLI::Command);
@@ -144,16 +141,16 @@ Example
       $self->good_morning;
   }
 
-  # yourapp
+  # myapp
   #!/usr/bin/perl
 
   use strict;
-  use YourApp;
+  use MyApp;
 
-  YourApp->dispatch;
+  MyApp->dispatch;
 
   # execute
-  [kurt@localhost ~] youapp hello
+  [kurt@localhost ~] myapp hello
   Good morning!
 
 =cut
@@ -185,15 +182,15 @@ configuration method
 
 Example
 
-  # YourApp.pm
+  # MyApp.pm
   __PACKAGE__->config(
                  name           => "kurt",
                  favorite_group => "nirvana",
                  favorite_song  => ["Lounge Act", "Negative Creep", "Radio Friendly Unit Shifter", "You Know You're Right"]
               );
   
-  # YourApp/Hello.pm
-  package YourApp:Hello;
+  # MyApp/Hello.pm
+  package MyApp::Hello;
 
   use strict;
   use base qw(App::CLI::Command);
@@ -207,16 +204,16 @@ Example
       print " and Smells Like Teen Spirit\n"
   }
 
-  # yourapp
+  # myapp
   #!/usr/bin/perl
 
   use strict;
-  use YourApp;
+  use MyApp;
 
-  YourApp->dispatch;
+  MyApp->dispatch;
 
   # execute
-  [kurt@localhost ~] youapp hello
+  [kurt@localhost ~] myapp hello
   My name is kurt
   My favorite group is nirvana
   My favorite song is Lounge Act,Negative Creep,Radio Friendly Unit Shifter,You Know You're Right and Smells Like Teen Spirit
@@ -237,7 +234,7 @@ __END__
 
 =head1 SEE ALSO
 
-L<App::CLI> L<App::CLI::Extension::Component::Config> L<Class::Data::Inheritable> L<Module::Pluggable::Object> L<UNIVERSAL::require>
+L<App::CLI> L<App::CLI::Extension::Component::Config> L<App::CLI::Extension::Component::Stash> L<Class::Data::Inheritable> L<Module::Pluggable::Object> L<UNIVERSAL::require>
 
 =head1 AUTHOR
 

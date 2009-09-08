@@ -8,15 +8,14 @@ App::CLI::Extension::Component::Config - for App::CLI::Extension config module
 
 =head1 VERSION
 
-0.01
+0.1
 
 =cut
 
 use strict;
-use Hash::Merge qw(merge);
 
 our $PACKAGE  = __PACKAGE__;
-our $VERSION  = 0.01;
+our $VERSION  = '0.1';
 
 sub config {
 
@@ -31,7 +30,10 @@ sub config {
         %hash = @_;
     }
 
-    $self->{$PACKAGE} = merge($self->{$PACKAGE}, \%hash) if keys %hash;
+    my @keys = keys %hash;
+    if (scalar(@keys) > 0) {
+        map { $self->{$PACKAGE}->{$_} = $hash{$_} } @keys;
+    }
 
     return $self->{$PACKAGE};
 }
@@ -42,7 +44,7 @@ __END__
 
 =head1 SEE ALSO
 
-L<App::CLI::Extension> L<Hash::Merge>
+L<App::CLI::Extension>
 
 =head1 AUTHOR
 

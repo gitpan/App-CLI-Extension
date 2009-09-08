@@ -3,7 +3,7 @@
 use strict;
 use Test::More tests => 1;
 use lib qw(t/lib);
-use MyCLI;
+use MyApp;
 
 our $RESULT;
 
@@ -21,7 +21,7 @@ if($hour >= 5 && $hour <= 11){
 
 {
     local *ARGV = ["plugin"];
-    MyCLI->dispatch;
+    MyApp->dispatch;
 }
 
 ok($result eq $RESULT);

@@ -1,4 +1,4 @@
-package MyCLI::ConfigTest;
+package MyApp::ConfigTest;
 
 use strict;
 use base qw(App::CLI::Command);

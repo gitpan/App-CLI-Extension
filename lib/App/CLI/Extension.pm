@@ -8,7 +8,7 @@ App::CLI::Extension - for App::CLI extension module
 
 =head1 VERSION
 
-0.1
+0.2
 
 =head1 SYNOPSIS
 
@@ -59,7 +59,7 @@ App::CLI::Extension - for App::CLI extension module
 
 The expansion module which added plug in, initial setting mechanism to App::CLI
 
-App::CLI::Extension::Component::** modules is automatic, and it is done require
+App::CLI::Extension::Component::* modules is automatic, and it is done require
 
 (It is now Config and Stash is automatic, and it is done require)
 
@@ -71,7 +71,7 @@ use 5.008;
 use Module::Pluggable::Object;
 use UNIVERSAL::require;
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 __PACKAGE__->mk_classdata("_plugins" => []);
 __PACKAGE__->mk_classdata("_config"  => {});
@@ -118,7 +118,7 @@ Example
   # MyApp::Plugin::GoodMorning and App::CLI::Plugin::Config::YAML::Syck require
   __PACKAGE__->load_plugins(qw(+MyApp::Plugin::GoodMorning Config::YAML::Syck));
   
-  # Your/App/Plugin/GoodMorning.pm
+  # MyApp/Plugin/GoodMorning.pm
   package MyApp::Plugin::GoodMorning;
 
   use strict;
@@ -130,7 +130,7 @@ Example
   }
 
   # MyApp/Hello.pm
-  package MyApp:Hello;
+  package MyApp::Hello;
 
   use strict;
   use base qw(App::CLI::Command);
@@ -245,7 +245,7 @@ Akira Horimoto
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
-Copyright (C) 2008 Akira Horimoto
+Copyright (C) 2009 Akira Horimoto
 
 =cut
 

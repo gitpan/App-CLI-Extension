@@ -1,5 +1,7 @@
 Revision history for Perl extension App::CLI::Extension
 
+0.2   Thu Sep 10 23:02:00 2009
+        - fixed invalid pod
 0.1   Mon Sep 09 07:00:00 2009
         - non use Hash::Merge
         - Stash.pm added to the Component Module

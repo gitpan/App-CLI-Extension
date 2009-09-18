@@ -8,61 +8,34 @@ App::CLI::Extension::Component::Stash - for App::CLI::Extension stash module
 
 =head1 VERSION
 
-0.1
+0.3
 
-=head1 SYNOPSIS
-
-  # MyApp/Hello.pm
-  package MyApp::Hello;
-  use strict;
-  use feature ":5.10.0";
-  use base qw(App::CLI::Command);
-     
-  sub run {
-  
-      my($self, @args) = @_;
-      $self->stash->{name} = "kurt";
-      say "stash value: " . $self->stash->{name};
-  }
-  
-  # myapp
-  #!/usr/bin/perl
-  
-  use strict;
-  use MyApp;
-  
-  MyApp->dispatch;
-  
-  # execute
-  [kurt@localhost ~] ./myapp hello
-  stash value: kurt
-
-=head1 DESCRIPTION
-
-App::CLI::Extension stash like global variable in Command package
-  
 =cut
 
 use strict;
+use base qw(Class::Data::Accessor);
 
-our $PACKAGE  = __PACKAGE__;
-our $VERSION  = '0.1';
+our $VERSION  = '0.3';
 
-=pod
+__PACKAGE__->mk_classaccessor( _stash => {} );
 
-=head1 METHOD
-
-=head2 stash
-
-=cut
 sub stash {
 
     my $self = shift;
 
-    $self->{$PACKAGE} = {} if !exists $self->{$PACKAGE};
-
-    return $self->{$PACKAGE};
+    my %hash;
+    if(scalar(@_) == 1 && ref($_[0]) eq "HASH"){
+        %hash = %{$_[0]}
+    } elsif(scalar(@_) > 1) {
+        %hash = @_;
+    }
+    my @keys = keys %hash;
+    if (scalar(@keys) > 0) {
+        map { $self->_stash->{$_} = $hash{$_} } @keys;
+    }
+    return $self->_stash;
 }
+
 
 1;
 
@@ -70,7 +43,7 @@ __END__
 
 =head1 SEE ALSO
 
-L<App::CLI::Extension>
+L<App::CLI::Extension> L<Class::Data::Accessor>
 
 =head1 AUTHOR
 

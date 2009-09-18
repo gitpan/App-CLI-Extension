@@ -8,7 +8,7 @@ App::CLI::Extension - for App::CLI extension module
 
 =head1 VERSION
 
-0.2
+0.3
 
 =head1 SYNOPSIS
 
@@ -66,16 +66,20 @@ App::CLI::Extension::Component::* modules is automatic, and it is done require
 =cut
 
 use strict;
-use base qw(App::CLI Class::Data::Inheritable);
+use base qw(App::CLI Class::Data::Accessor);
 use 5.008;
-use Module::Pluggable::Object;
 use UNIVERSAL::require;
 
-our $VERSION = '0.2';
+our $VERSION    = '0.3';
+our @COMPONENTS = qw(
+                     FirstSetup
+                     Config
+                     Stash
+                  );
 
-__PACKAGE__->mk_classdata("_plugins" => []);
-__PACKAGE__->mk_classdata("_config"  => {});
-__PACKAGE__->mk_classdata("_components");
+__PACKAGE__->mk_classaccessor( "_config"      => {} );
+__PACKAGE__->mk_classaccessor( "_components" );
+__PACKAGE__->mk_classaccessor( "_plugins" );
 
 =pod
 
@@ -86,8 +90,14 @@ __PACKAGE__->mk_classdata("_components");
 sub import {
 
     my $class = shift;
-    my $finder = Module::Pluggable::Object->new(search_path => __PACKAGE__ . "::Component", require => 1);
-    $class->_components([$finder->plugins]);
+    my @loaded_components;
+    foreach my $component (@COMPONENTS) {
+       $component = sprintf "%s::Component::%s", __PACKAGE__, $component;
+       $component->require or die "load component error: $UNIVERSAL::require::ERROR";
+       $component->import;
+       push @loaded_components, $component;
+    }
+    $class->_components(\@loaded_components);
 }
 
 sub prepare {
@@ -101,7 +111,7 @@ sub prepare {
         # component and plugin setup
         push @{"$pkg\::ISA"}, @{$class->_components}, @{$class->_plugins};
         $cmd->config($class->_config);
-        $cmd->setup if $cmd->can("setup");
+        $cmd->setup;
     }
     return $cmd;
 }
@@ -168,6 +178,7 @@ sub load_plugins {
             $plugin = "App::CLI::Plugin::$plugin";
         }
         $plugin->require or die "plugin load error: $UNIVERSAL::require::ERROR";
+        $plugin->import;
         push @loaded_plugins, $plugin;
     }
 
@@ -220,7 +231,6 @@ Example
 
 =cut
 
-
 sub config {
 
     my($class, %config) = @_;
@@ -228,13 +238,42 @@ sub config {
     return $class->_config;
 }
 
+=head1 COMPONENT METHOD
+
+=head2 setup
+
+for component and plugin function
+
+=head2 stash
+
+like global variable in Command package
+
+Example:
+  
+  # MyApp/Hello.pm
+  package MyApp::Hello;
+  use strict;
+  use feature ":5.10.0";
+  use base qw(App::CLI::Command);
+     
+  sub run {
+  
+      my($self, @args) = @_;
+      $self->stash->{name} = "kurt";
+      say "stash value: " . $self->stash->{name};
+  }
+  
+  1;
+
+=cut
+
 1;
 
 __END__
 
 =head1 SEE ALSO
 
-L<App::CLI> L<App::CLI::Extension::Component::Config> L<App::CLI::Extension::Component::Stash> L<Class::Data::Inheritable> L<Module::Pluggable::Object> L<UNIVERSAL::require>
+L<App::CLI> L<Class::Data::Accessor> L<UNIVERSAL::require>
 
 =head1 AUTHOR
 

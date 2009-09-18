@@ -8,20 +8,20 @@ App::CLI::Extension::Component::Config - for App::CLI::Extension config module
 
 =head1 VERSION
 
-0.1
+0.3
 
 =cut
 
 use strict;
+use base qw(Class::Data::Accessor);
 
-our $PACKAGE  = __PACKAGE__;
-our $VERSION  = '0.1';
+our $VERSION  = '0.3';
+
+__PACKAGE__->mk_classaccessor( _config => {} );
 
 sub config {
 
     my $self = shift;
-
-    $self->{$PACKAGE} = {} if !exists $self->{$PACKAGE};
 
     my %hash;
     if(scalar(@_) == 1 && ref($_[0]) eq "HASH"){
@@ -29,13 +29,11 @@ sub config {
     } elsif(scalar(@_) > 1) {
         %hash = @_;
     }
-
     my @keys = keys %hash;
     if (scalar(@keys) > 0) {
-        map { $self->{$PACKAGE}->{$_} = $hash{$_} } @keys;
+        map { $self->_config->{$_} = $hash{$_} } @keys;
     }
-
-    return $self->{$PACKAGE};
+    return $self->_config;
 }
 
 1;

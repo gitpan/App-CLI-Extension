@@ -1,5 +1,7 @@
 Revision history for Perl extension App::CLI::Extension
 
+0.4   Sat Sep 20 01:10:45 2009
+        - fixed invalid pod
 0.3   Fri Sep 19 23:00:00 2009
         - non use Module::Pluggable
         - non use Class::Data::Inheritable. instead of use Class::Data::Accessor

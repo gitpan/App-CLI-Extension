@@ -4,7 +4,7 @@ package App::CLI::Extension::Component::FirstSetup;
 
 =head1 NAME
 
-App::CLI::Extension::Component::Accessor - for App::CLI::Extension config module
+App::CLI::Extension::Component::FirstSetup - for App::CLI::Extension config module
 
 =head1 VERSION
 

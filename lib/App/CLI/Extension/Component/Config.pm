@@ -8,14 +8,14 @@ App::CLI::Extension::Component::Config - for App::CLI::Extension config module
 
 =head1 VERSION
 
-0.3
+0.7
 
 =cut
 
 use strict;
 use base qw(Class::Data::Accessor);
 
-our $VERSION  = '0.3';
+our $VERSION  = '0.7';
 
 __PACKAGE__->mk_classaccessor( _config => {} );
 
@@ -25,7 +25,7 @@ sub config {
 
     my %hash;
     if(scalar(@_) == 1 && ref($_[0]) eq "HASH"){
-        %hash = %{$_[0]}
+        %hash = %{$_[0]};
     } elsif(scalar(@_) > 1) {
         %hash = @_;
     }

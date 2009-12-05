@@ -4,18 +4,18 @@ package App::CLI::Extension::Component::FirstSetup;
 
 =head1 NAME
 
-App::CLI::Extension::Component::Accessor - for App::CLI::Extension config module
+App::CLI::Extension::Component::FirstSetup - for App::CLI::Extension setup module
 
 =head1 VERSION
 
-0.3
+0.7
 
 =cut
 
 use strict;
 use NEXT;
 
-our $VERSION  = '0.3';
+our $VERSION  = '0.7';
 
 sub setup {
 

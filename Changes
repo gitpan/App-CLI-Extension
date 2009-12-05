@@ -1,5 +1,8 @@
 Revision history for Perl extension App::CLI::Extension
 
+0.7   Sat Dec  5 03:32:42 2009
+        - add A::C::E::Component::OriginalArgv
+        - fixed invalid pod
 0.6   Tue Dec  1 00:55:45 2009
         - miss!
 0.5   Mon Nov 30 02:17:56 2009

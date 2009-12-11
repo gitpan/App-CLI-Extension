@@ -19,8 +19,10 @@ inc/Test/Builder/Module.pm
 inc/Test/More.pm
 lib/App/CLI/Extension.pm
 lib/App/CLI/Extension/Component/Config.pm
-lib/App/CLI/Extension/Component/FirstSetup.pm
+lib/App/CLI/Extension/Component/ErrorHandler.pm
+lib/App/CLI/Extension/Component/InstallCallback.pm
 lib/App/CLI/Extension/Component/OriginalArgv.pm
+lib/App/CLI/Extension/Component/RunCommand.pm
 lib/App/CLI/Extension/Component/Stash.pm
 Makefile.PL
 MANIFEST			This list of files
@@ -34,6 +36,9 @@ t/04_argv0.t
 t/05_full_argv0.t
 t/06_orig_argv.t
 t/07_cmdline.t
+t/08_action_chain.t
+t/09_fail.t
+t/10_callback.t
 t/lib/MyApp.pm
 t/lib/MyApp/Argv0Test.pm
 t/lib/MyApp/CmdlineTest.pm
@@ -44,6 +49,25 @@ t/lib/MyApp/OrigArgvTest.pm
 t/lib/MyApp/Plugin/Greeting.pm
 t/lib/MyApp/PluginTest.pm
 t/lib/MyApp/StashTest.pm
+t/lib/MyAppActionChain.pm
+t/lib/MyAppActionChain/ChainTest.pm
+t/lib/MyAppActionChain/Help.pm
+t/lib/MyAppActionChain/Plugin/Finish1.pm
+t/lib/MyAppActionChain/Plugin/Finish2.pm
+t/lib/MyAppActionChain/Plugin/Postrun1.pm
+t/lib/MyAppActionChain/Plugin/Postrun2.pm
+t/lib/MyAppActionChain/Plugin/Prerun1.pm
+t/lib/MyAppActionChain/Plugin/Prerun2.pm
+t/lib/MyAppActionChain/Plugin/Setup1.pm
+t/lib/MyAppActionChain/Plugin/Setup2.pm
+t/lib/MyAppCallback.pm
+t/lib/MyAppCallback/CallbackTest.pm
+t/lib/MyAppCallback/Help.pm
+t/lib/MyAppCallback/Plugin/Callback.pm
+t/lib/MyAppFail.pm
+t/lib/MyAppFail/FailTest.pm
+t/lib/MyAppFail/Help.pm
+t/lib/MyAppFail/Plugin/Fail.pm
 xt/perlcritic.t
 xt/pod.t
 xt/podspell.t

@@ -8,7 +8,7 @@ App::CLI::Extension - for App::CLI extension module
 
 =head1 VERSION
 
-0.7
+1.0
 
 =head1 SYNOPSIS
 
@@ -23,7 +23,7 @@ App::CLI::Extension - for App::CLI extension module
   __PACKAGE__->load_plugins(qw(Foo +MyApp::Plugin::Bar));
   
   # extension method
-  __PACKAGE__->config( name => "kurt");
+  __PACKAGE__->config( name => "kurt" );
   
   1;
   
@@ -63,6 +63,55 @@ App::CLI::Extension::Component::* modules is automatic, and it is done require
 
 (It is now Config and Stash is automatic, and it is done require)
 
+=head2 RUN PHASE
+
+  +----------------------+
+  |   ** run_method **   |
+  |  +----------------+  |
+  |  |  setup  phase  |  | 
+  |  +----------------+  |
+  |          ||          |
+  |  +----------------+  |
+  |  |  prerun phase  |  | 
+  |  +----------------+  |
+  |          ||          |  
+  |  +----------------+  |   if anything error...   +----------------+
+  |  |    run phase   |  |  ======================> |   fail  phase  |
+  |  +----------------+  |                          +----------------+
+  |          ||          |
+  |  +----------------+  |
+  |  |  postrun phase |  |
+  |  +----------------+  |
+  |          ||          |
+  |  +----------------+  |
+  |  |  finish phase  |  |
+  |  +----------------+  |
+  +----------------------+
+
+=head2 SETUP
+
+If you define initialization and initialization of each plug-in
+
+=head2 PRERUN
+
+If you want the process to run before you run something in the main processing
+
+=head2 RUN
+
+Process to define the main(require)
+
+=head2 POSTRUN
+
+After the run method to execute
+
+=head2 FINISH
+
+At the end of all processing
+
+=head2 FAIL
+
+setup/prerun/run/postrun/finish processing to be executed if an exception occurs somewhere in the phase error
+
 =cut
 
 use strict;
@@ -70,12 +119,14 @@ use base qw(App::CLI Class::Data::Accessor);
 use 5.008;
 use UNIVERSAL::require;
 
-our $VERSION    = '0.7';
+our $VERSION    = '1.0';
 our @COMPONENTS = qw(
-                     FirstSetup
-                     Config
-					 OriginalArgv
-                     Stash
+					Config
+					ErrorHandler
+					InstallCallback
+					OriginalArgv
+					Stash
+					RunCommand
                   );
 
 __PACKAGE__->mk_classaccessor("_config"      => {});
@@ -102,37 +153,41 @@ sub import {
 	$class->_components(\@loaded_components);
 }
 
-sub prepare {
+sub dispatch {
 
-    my $class = shift;
-
+	my $class = shift;
 	# save original argv
 	my @argv = @ARGV;
 	$class->_orig_argv(\@argv);
-
-	my $cmd = $class->SUPER::prepare(@_);
+	my $cmd = $class->prepare(@_);
+	$cmd->subcommand;
 	{
 		no strict "refs"; ## no critic
 		my $pkg = ref($cmd);
-		# component and plugin setup
-		push @{"$pkg\::ISA"}, @{$class->_components}, @{$class->_plugins};
+		# component and plugin set value
+		unshift @{"$pkg\::ISA"}, @{$class->_components};
+		unshift @{"$pkg\::ISA"}, @{$class->_plugins};
 		$cmd->config($class->_config);
 		$cmd->orig_argv($class->_orig_argv);
-		$cmd->setup;
 	}
-	return $cmd;
+	$cmd->run_command(@ARGV);
 }
+
+## I really does not want....
+sub error_cmd {
+	"Command not recognized, try $0 help.\n";
+}
+
 
 ## I really does not want....
 sub get_cmd {
 
-    my ($class, $cmd, @arg) = @_;
+	my ($class, $cmd, @arg) = @_;
 	if (!defined $cmd || $cmd !~ /^[a-z0-9_]+$/) {
 		die $class->error_cmd;
 	}
 	#die $class->error_cmd unless $cmd && $cmd =~ m/^[?a-z]+$/;
-	
-    my $pkg = join('::', $class->command_class, $class->_cmd_map($cmd));
+	my $pkg = join('::', $class->command_class, $class->_cmd_map($cmd));
 	my $file = "$pkg.pm";
 	$file =~ s!::!/!g;
 	$pkg->require;
@@ -144,9 +199,9 @@ sub get_cmd {
 		die $class->error_cmd;
 	}
 
-    my $c = $pkg->new(@arg);
-    $c->app($class);
-    return $c;
+	my $c = $pkg->new(@arg);
+	$c->app($class);
+	return $c;
 }
 
 
@@ -214,7 +269,7 @@ sub load_plugins {
 		$plugin->require or die "plugin load error: $UNIVERSAL::require::ERROR";
 		$plugin->import;
 		push @loaded_plugins, $plugin;
-    }
+	}
 
 	$class->_plugins(\@loaded_plugins);
 }
@@ -370,10 +425,6 @@ Example:
   [kurt@localhost ~] myapp hello --verbose --num=10
   my script original argv is [hello,--verbose, --num=10]
 
-=head2 setup
-
-for component and plugin function
-
 =head2 stash
 
 like global variable in Command package
@@ -394,6 +445,68 @@ Example:
   }
   
   1;
+
+=head2 new_callback
+
+install new callback phase
+
+Example:
+
+  $self->new_callback("some_phase");
+  # registered callback argument pattern
+  $self->new_callback("some_phase", sub { $self = shift; "anything to do..." });
+
+=head2 add_callback
+
+install callback
+
+Example:
+
+  $self->add_callback("some_phase", sub { my $self = shift; say "some_phase method No.1" });
+  $self->add_callback("some_phase", sub { my $self = shift; say "some_phase method No.1" });
+  $self->add_callback("any_phase", sub {
+                                     my($self, @args) = @_;
+                                     say "any_phase args: @args";
+                                  });
+
+=cut
+
+=head2 exec_callback
+
+execute callback
+
+Example:
+
+  $self->execute_callback("some_phase");
+  # some_phase method method No.1
+  # some_phase method method No.2
+  
+  $self->execute_callback("any_phase", qw(one two three));
+  # any_phase args: one two three 
+
+=head2 exists_callback
+
+exists callback check
+
+Example:
+
+  if ($self->exists_callback("some_phase")) {
+      $self->exec_callback("some_phase");
+  } else {
+      die "some_phase is not exists callback phase";
+  }
+
+=head1 RUN PHASE METHOD
+
+=head2 setup
+
+=head2 prerun
+
+=head2 postrun
+
+=head2 finish
+
+=head2 fail
 
 =cut
 

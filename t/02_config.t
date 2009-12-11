@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 use strict;
-use Test::More tests => 2;
+use Test::More tests => 1;
 use lib qw(t/lib);
 use MyApp;
 
@@ -14,11 +14,4 @@ my $result = "banana";
 }
 
 ok($result eq $RESULT);
-
-{
-    local *ARGV = ["config", "--color=nothing"];
-    MyApp->dispatch;
-}
-
-ok(!defined($RESULT));
 

@@ -8,7 +8,7 @@ App::CLI::Extension::Component::OriginalArgv - for App::CLI::Extension original 
 
 =head1 VERSION
 
-0.7
+1.0
 
 =cut
 
@@ -17,7 +17,7 @@ use base qw(Class::Data::Accessor);
 use FindBin qw($Bin $Script);
 use File::Spec;
 
-our $VERSION  = '0.7';
+our $VERSION  = '1.0';
 
 __PACKAGE__->mk_classaccessor("_orig_argv");
 __PACKAGE__->mk_classaccessor("argv0"      => $Script);

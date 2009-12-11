@@ -1,10 +1,10 @@
-package App::CLI::Extension::Component::Stash;
+package App::CLI::Extension::Component::ErrorHandler;
 
 =pod
 
 =head1 NAME
 
-App::CLI::Extension::Component::Stash - for App::CLI::Extension stash module
+App::CLI::Extension::Component::Error - for App::CLI::Extension error module
 
 =head1 VERSION
 
@@ -17,23 +17,12 @@ use base qw(Class::Data::Accessor);
 
 our $VERSION  = '1.0';
 
-__PACKAGE__->mk_classaccessor( _stash => {} );
+__PACKAGE__->mk_classaccessor( "error" );
 
-sub stash {
+sub is_error {
 
 	my $self = shift;
-
-	my %hash;
-	if(scalar(@_) == 1 && ref($_[0]) eq "HASH"){
-		%hash = %{$_[0]};
-	} elsif (scalar(@_) > 1) {
-		%hash = @_;
-	}
-	my @keys = keys %hash;
-	if (scalar(@keys) > 0) {
-		map { $self->_stash->{$_} = $hash{$_} } @keys;
-	}
-	return $self->_stash;
+	return defined $self->error ? 1 : 0;
 }
 
 1;

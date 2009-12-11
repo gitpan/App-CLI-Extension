@@ -10,3 +10,7 @@ Horimoto
 argv
 cmdline
 fullname
+POSTRUN
+PRERUN
+postrun
+prerun

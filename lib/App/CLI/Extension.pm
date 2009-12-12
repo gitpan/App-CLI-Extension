@@ -8,7 +8,7 @@ App::CLI::Extension - for App::CLI extension module
 
 =head1 VERSION
 
-1.0
+1.1
 
 =head1 SYNOPSIS
 
@@ -119,7 +119,7 @@ use base qw(App::CLI Class::Data::Accessor);
 use 5.008;
 use UNIVERSAL::require;
 
-our $VERSION    = '1.0';
+our $VERSION    = '1.1';
 our @COMPONENTS = qw(
 					Config
 					ErrorHandler

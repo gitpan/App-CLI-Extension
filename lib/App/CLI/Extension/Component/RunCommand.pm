@@ -8,7 +8,7 @@ App::CLI::Extension::Component::RunCommand - for App::CLI::Command run_command o
 
 =head1 VERSION
 
-1.0
+1.1
 
 =cut
 
@@ -16,7 +16,7 @@ use strict;
 use MRO::Compat;
 
 our @RUNTIME_COMMANDS = qw(setup prerun run postrun finish);
-our $VERSION          = '1.0';
+our $VERSION          = '1.1';
 
 sub run_command {
 

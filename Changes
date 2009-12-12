@@ -1,5 +1,7 @@
 Revision history for Perl extension App::CLI::Extension
 
+1.1   Sat Dec 13 17:05:34 2009
+        - fixed invalid pod
 1.0   Sat Dec 13 02:45:21 2009
         - add A::C::E::Component::RunMethod
         - add A::C::E::Component::InstallCallback (before A::C::P::InstallCallback)

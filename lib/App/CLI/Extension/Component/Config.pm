@@ -8,14 +8,14 @@ App::CLI::Extension::Component::Config - for App::CLI::Extension config module
 
 =head1 VERSION
 
-1.0
+1.1
 
 =cut
 
 use strict;
 use base qw(Class::Data::Accessor);
 
-our $VERSION  = '1.0';
+our $VERSION  = '1.1';
 
 __PACKAGE__->mk_classaccessor( _config => {} );
 

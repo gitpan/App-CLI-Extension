@@ -1,0 +1,100 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.55.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 861d94c2bb14e25c24d6c5d3326cf344d6771a44 .gitignore
+SHA1 10b1f06cbd0ce83be63bb6778108d5570f61422e Changes
+SHA1 5f8b8a4fddb9599362b7a52696fc5779733df435 MANIFEST
+SHA1 9067eb27966344ac6bb8b8ca0c13bd551e12ab30 META.yml
+SHA1 b877ba834a53df272257a3aff77bf885bd123a8d Makefile.PL
+SHA1 400b10f7687e598c6840825a110c42a993a904ac README
+SHA1 fd5f3c4f0418efee3b9b16cf8c3902e8374909df inc/Module/Install.pm
+SHA1 d001b4b9a48395a8c4134b234a0e1789138427c5 inc/Module/Install/AuthorTests.pm
+SHA1 7cd7c349afdf3f012e475507b1017bdfa796bfbd inc/Module/Install/Base.pm
+SHA1 ba186541bbf6439111f01fc70769cf24d22869bf inc/Module/Install/Can.pm
+SHA1 aaa50eca0d7751db7a4d953fac9bc72c6294e238 inc/Module/Install/Fetch.pm
+SHA1 219da5a95c290312a81477b226f005997d97dcfd inc/Module/Install/Include.pm
+SHA1 3e83972921d54198d1246f7278f08664006cd65d inc/Module/Install/Makefile.pm
+SHA1 12bf1867955480d47d5171a9e9c6a96fabe0b58f inc/Module/Install/Metadata.pm
+SHA1 fd81bc0e85a1193f278760edb82928d8b4dff2c1 inc/Module/Install/Repository.pm
+SHA1 a399445a51f2f7e00c46487e5a7ddf712b1111ee inc/Module/Install/TestBase.pm
+SHA1 f7ee667e878bd2faf22ee9358a7b5a2cc8e91ba4 inc/Module/Install/Win32.pm
+SHA1 8ed29d6cf217e0977469575d788599cbfb53a5ca inc/Module/Install/WriteAll.pm
+SHA1 bb7c7069ab09d5c495420e33844006e7a1b5f9a9 inc/Spiffy.pm
+SHA1 741bf1da0b74065a926074535f9cdc86de675b74 inc/Test/Base.pm
+SHA1 474f62668f61598dde1173370fdd4476e437a508 inc/Test/Base/Filter.pm
+SHA1 f0ebc594cf8ba858ee9a840c344d9b7ea2c3c6f4 inc/Test/Builder.pm
+SHA1 6bb30e9867f6dbcada80acca07cb727fa09fc3a0 inc/Test/Builder/Module.pm
+SHA1 07c750f370de7a44ee7b0ed9ec30a7e89c24c9b9 inc/Test/More.pm
+SHA1 41e1ddab143a556e0b7f2d632877aba45f555f9f lib/App/CLI/Extension.pm
+SHA1 12f8e4f10e07aa41972deef0835777bc2ec85e6b lib/App/CLI/Extension/Component/Config.pm
+SHA1 bfc4076d2dc9548528148217b808d2b9361a0afd lib/App/CLI/Extension/Component/ErrorHandler.pm
+SHA1 99ce63e0c8803fcfd2c319999113167ce6144bd7 lib/App/CLI/Extension/Component/InstallCallback.pm
+SHA1 7ea4751584c7fee2c3779e4bc05d4a0c5739f8f0 lib/App/CLI/Extension/Component/OriginalArgv.pm
+SHA1 f9b8c2af0bc43718d6c5c3106218c6b787952355 lib/App/CLI/Extension/Component/RunCommand.pm
+SHA1 6cadb45bffe6843495de30ad5224e4b4c6bfe871 lib/App/CLI/Extension/Component/Stash.pm
+SHA1 9280dcf7ea873ea1250136da2e8a7268442cca71 t/00_compile.t
+SHA1 94294b0f4699ba7f138388b103a8d5d540b52d86 t/01_plugin.t
+SHA1 f570752fe7a48709594ceef0a49c6ceec033fde8 t/02_config.t
+SHA1 2843f09f7db22f87a55906dd58415da8b79884cb t/03_stash.t
+SHA1 cef498c8c638beda15a1858921357d566fcdf957 t/04_argv0.t
+SHA1 c8322cbc0a44d4294f419fe70414970c66d5c212 t/05_full_argv0.t
+SHA1 d8c0e273c43dac062a514c4b23e8a24b8b933e0e t/06_orig_argv.t
+SHA1 8c251b617aa3be22e8809df099ffb69e190b40e9 t/07_cmdline.t
+SHA1 e975b2c7fa0d19c59ad52a9cdc2af02e9c843a0b t/08_action_chain.t
+SHA1 baeda41c7c3efd9da00bb6b002c1033f93b7d607 t/09_fail.t
+SHA1 ea69a474cd2447dce50d7db7f7fba5ddc0bb1c7a t/10_fail_default_exit_value_fork.t
+SHA1 9999c7cc75adf6e2259e205991ad103103d7a7f2 t/11_fail_default_exit_value_global_variable.t
+SHA1 f6b90acf9250f3d0c708a28df135e78ebed2b1f3 t/12_callback.t
+SHA1 6f86e8b434020f7fe4b8a3ed0c75ac378e1af24d t/lib/MyApp.pm
+SHA1 4788dbe8f0bc63eee31115556c277832856f1bb0 t/lib/MyApp/Argv0Test.pm
+SHA1 0e68be7b1d9d3bdf33e94a57219785bd9c9b8a2f t/lib/MyApp/CmdlineTest.pm
+SHA1 597706938c802ee04106326aeef30e6594628be8 t/lib/MyApp/ConfigTest.pm
+SHA1 5084c610a06c04321aec7f273291a0de384dd484 t/lib/MyApp/FullArgv0Test.pm
+SHA1 64e27823249d7d24d2ec6f45300db5008a12cc99 t/lib/MyApp/Help.pm
+SHA1 65f7301faf41ddd07be90a6b712f13b95e460dae t/lib/MyApp/OrigArgvTest.pm
+SHA1 de2c42847a757524d68583d1a487b457c8c0f011 t/lib/MyApp/Plugin/Greeting.pm
+SHA1 1534b5c8c47c7af982ea79ba9afabd7d3eb0c975 t/lib/MyApp/PluginTest.pm
+SHA1 eeca9f993e21feced29467aab514cbd535f6bcad t/lib/MyApp/StashTest.pm
+SHA1 655ee92101883e25721f0ebdb5cfa8c21b7dea2f t/lib/MyAppActionChain.pm
+SHA1 5764a0bb7e33a518a93c469aa157832a8db8b896 t/lib/MyAppActionChain/ChainTest.pm
+SHA1 e26f87386ea879844a8060ed67459418320e382d t/lib/MyAppActionChain/Help.pm
+SHA1 17f3598f3274c5c10c2dd4ba59bc37c0d476259f t/lib/MyAppActionChain/Plugin/Finish1.pm
+SHA1 b945940c90a49a97173cf08afc6b27fe0d498033 t/lib/MyAppActionChain/Plugin/Finish2.pm
+SHA1 88f2aaa3b904ade26bc8a6a7f43e0e97ba566fb8 t/lib/MyAppActionChain/Plugin/Postrun1.pm
+SHA1 4cc63c19e56f76b117e6bcaa503aeb97ab920891 t/lib/MyAppActionChain/Plugin/Postrun2.pm
+SHA1 d9e0ab1ed1aa94d068342891fbb7eae2a5608744 t/lib/MyAppActionChain/Plugin/Prerun1.pm
+SHA1 395f945adbfd73f1cf11853223a0b721a1fe9192 t/lib/MyAppActionChain/Plugin/Prerun2.pm
+SHA1 8c0e6da9407ec31dc5168edc07058e723a0dd658 t/lib/MyAppActionChain/Plugin/Setup1.pm
+SHA1 b0a1cb952522a0a27f2d5449b59ea8a9753d104b t/lib/MyAppActionChain/Plugin/Setup2.pm
+SHA1 5e77ac27acee50dd16769e7f3a7debc3cf9faaa1 t/lib/MyAppCallback.pm
+SHA1 e6869a6d82708bd830df7740b22ff764c4d3a9ed t/lib/MyAppCallback/CallbackTest.pm
+SHA1 681a69da52911d488a2cf163fa5733fa83a2d6a5 t/lib/MyAppCallback/Help.pm
+SHA1 8145b5fc3599004c7108275807ab32e7619a8285 t/lib/MyAppCallback/Plugin/Callback.pm
+SHA1 2ef20c35b41eefebcf1d955411f0abf68ac94188 t/lib/MyAppFail.pm
+SHA1 67f0c8eede6b39f04d7d7517811ba11b917485d2 t/lib/MyAppFail/FailTest.pm
+SHA1 02d5f697699c9d2dd97ce8eb539b6f16319be98a t/lib/MyAppFail/Help.pm
+SHA1 10c9dd69a263cbff0e9a40d2d31686394ad72c2b t/lib/MyAppFail/Plugin/Fail.pm
+SHA1 af45507a70a164e09ffc5f37915fd47cbbf083bd xt/perlcritic.t
+SHA1 2341ca1eae093f62f04e38e305a1fadccac12f64 xt/perlcriticrc
+SHA1 e9c6a5881fc60173fbc8d479c1afd2ce3b43bef1 xt/pod.t
+SHA1 c1e67f223f6517dcc28047c3d68b8fcca30035cf xt/podspell.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFLQff+N6ezU7mtZfcRAnD6AJ9NB3ny4VJwG7xVMfrgphnfEP1cWQCdEPGr
+Cn5cel9F6A+xE80pLrJXlys=
+=4K1x
+-----END PGP SIGNATURE-----

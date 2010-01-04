@@ -8,7 +8,7 @@ App::CLI::Extension - for App::CLI extension module
 
 =head1 VERSION
 
-1.1
+1.2
 
 =head1 SYNOPSIS
 
@@ -78,15 +78,18 @@ App::CLI::Extension::Component::* modules is automatic, and it is done require
   |  +----------------+  |   if anything error...   +----------------+
   |  |    run phase   |  |  ======================> |   fail  phase  |
   |  +----------------+  |                          +----------------+
-  |          ||          |
-  |  +----------------+  |
-  |  |  postrun phase |  |
-  |  +----------------+  |
-  |          ||          |
-  |  +----------------+  |
-  |  |  finish phase  |  |
-  |  +----------------+  |
-  +----------------------+
+  |          ||          |                       set exit_value(default: 255)
+  |  +----------------+  |                                   |
+  |  |  postrun phase |  |                                   |
+  |  +----------------+  |                                   |
+  +----------------------+                                   |
+              |                                              |
+              |                                              |
+     +----------------+                                      |
+     |  finish phase  |  <================================== +
+     +----------------+  
+              |
+             exit
 
 =head2 SETUP
 
@@ -116,10 +119,9 @@ setup/prerun/run/postrun/finish processing to be executed if an exception occurs
 
 use strict;
 use base qw(App::CLI Class::Data::Accessor);
-use 5.008;
 use UNIVERSAL::require;
 
-our $VERSION    = '1.1';
+our $VERSION    = '1.2';
 our @COMPONENTS = qw(
 					Config
 					ErrorHandler
@@ -496,6 +498,15 @@ Example:
       die "some_phase is not exists callback phase";
   }
 
+=head2 exit_value
+
+set exit value
+
+Example:
+
+  # program exit value is 1(ex. echo $?)
+  $self->exit_value(1);
+
 =head1 RUN PHASE METHOD
 
 =head2 setup
@@ -506,7 +517,11 @@ Example:
 
 =head2 finish
 
+program last phase. By default, the exit will be executed automatically, exit if you do not want the APPCLI_NON_EXIT environ valiable how do I set the (value is whatever)
+
 =head2 fail
+
+error phase. default error exit value is 255. if you want to change exit_value, see exit_value manual
 
 =cut
 

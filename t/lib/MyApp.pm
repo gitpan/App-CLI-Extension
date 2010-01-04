@@ -12,6 +12,7 @@ use constant alias => (
                 cmdline     => "CmdlineTest"
             );
 
+$ENV{APPCLI_NON_EXIT} = 1;
 __PACKAGE__->load_plugins(qw(+MyApp::Plugin::Greeting));
 __PACKAGE__->config(yellow => "banana");
 

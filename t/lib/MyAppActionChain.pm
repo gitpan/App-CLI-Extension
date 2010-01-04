@@ -6,6 +6,7 @@ use constant alias => (
                 chain      => "ChainTest",
             );
 
+$ENV{APPCLI_NON_EXIT} = 1;
 __PACKAGE__->load_plugins(qw(
                          +MyAppActionChain::Plugin::Setup1
                          +MyAppActionChain::Plugin::Setup2

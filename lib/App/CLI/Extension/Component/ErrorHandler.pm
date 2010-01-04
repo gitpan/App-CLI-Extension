@@ -8,21 +8,21 @@ App::CLI::Extension::Component::ErrorHandler - for App::CLI::Extension error mod
 
 =head1 VERSION
 
-1.1
+1.2
 
 =cut
 
 use strict;
 use base qw(Class::Data::Accessor);
 
-our $VERSION  = '1.1';
+our $VERSION  = '1.2';
 
-__PACKAGE__->mk_classaccessor( "error" );
+__PACKAGE__->mk_classaccessor("errstr");
 
 sub is_error {
 
 	my $self = shift;
-	return defined $self->error ? 1 : 0;
+	return defined $self->errstr ? 1 : 0;
 }
 
 1;

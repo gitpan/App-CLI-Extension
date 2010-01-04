@@ -5,13 +5,14 @@ all_from 'lib/App/CLI/Extension.pm';
 
 build_requires 'Test::More';
 requires(
-      "App::CLI"              => '0.07',
+      "App::CLI"              => '0.08',
       "Class::Data::Accessor" => 0,
       "UNIVERSAL::require"    => 0,
       "MRO::Compat"           => 0,
      );
 use_test_base;
-auto_include_deps;
-author_tests('xt');
 auto_set_repository;
+auto_includes;
+author_tests('xt');
+sign;
 WriteAll;

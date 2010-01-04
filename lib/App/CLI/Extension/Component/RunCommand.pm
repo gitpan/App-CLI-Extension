@@ -8,24 +8,50 @@ App::CLI::Extension::Component::RunCommand - for App::CLI::Command run_command o
 
 =head1 VERSION
 
-1.1
+1.2
 
 =cut
 
 use strict;
 use MRO::Compat;
+use base qw(Class::Data::Accessor);
 
-our @RUNTIME_COMMANDS = qw(setup prerun run postrun finish);
-our $VERSION          = '1.1';
+__PACKAGE__->mk_classaccessor("exit_value");
+
+our $DEFAULT_FAIL_EXIT_VALUE    = 255;
+our $DEFAULT_SUCCESS_EXIT_VALUE = 0;
+our $VERSION                    = '1.2';
 
 sub run_command {
 
 	my($self, @argv) = @_;
-	eval { map { $self->$_(@argv) } @RUNTIME_COMMANDS };
+
+	eval {
+		$self->setup(@argv);
+		$self->prerun(@argv);
+		$self->run(@argv);
+		$self->postrun(@argv);
+	};
 	if ($@) {
 		chomp(my $message = $@);
-		$self->error($message);
+		$self->errstr($message);
 		$self->fail(@argv);
+		if (!defined $self->exit_value) {
+			$self->exit_value($DEFAULT_FAIL_EXIT_VALUE);
+		}
+	}
+	$self->finish(@argv);
+
+	if (!defined $self->exit_value) {
+		$self->exit_value($DEFAULT_SUCCESS_EXIT_VALUE);
+	}
+
+	if (exists $ENV{APPCLI_NON_EXIT}) {
+		no strict "refs";  ## no critic
+		my $dispatch_pkg = $self->app;
+		${"$dispatch_pkg\::EXIT_VALUE"} = $self->exit_value;
+	} else {
+		exit $self->exit_value;
 	}
 }
 
@@ -64,7 +90,8 @@ sub postrun {
 sub fail {
 
 	my($self, @argv) = @_;
-	die sprintf("default fail method. error:%s. override fail method!!\n", $self->error);
+	warn sprintf("default fail method. errstr:%s. override fail method!!\n", $self->errstr);
+	$self->maybe::next::method(@argv);
 }
 
 1;

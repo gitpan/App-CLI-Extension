@@ -8,14 +8,14 @@ App::CLI::Extension::Component::Stash - for App::CLI::Extension stash module
 
 =head1 VERSION
 
-1.1
+1.2
 
 =cut
 
 use strict;
 use base qw(Class::Data::Accessor);
 
-our $VERSION  = '1.1';
+our $VERSION  = '1.2';
 
 __PACKAGE__->mk_classaccessor( _stash => {} );
 

@@ -8,7 +8,7 @@ App::CLI::Extension::Component::InstallCallback - for App::CLI::Extension instal
 
 =head1 VERSION
 
-1.1
+1.2
 
 =head1 SYNOPSIS
   
@@ -28,19 +28,19 @@ App::CLI::Extension::Component::InstallCallback - for App::CLI::Extension instal
   sub prerun {
   
       my($self, @argv) = @_;
-          $self->new_callback("view", sub {
+	  $self->new_callback("view", sub {
                                    my($self, @args) = @_;
-                                   # anything view to do...
+								   # anything view to do...
                                    foreach $list (@{$self->anything_all_list}) {
                                        printf "%d: %s\n", $list->id, $list->name;
-                                   }
+								   }
                                });
 	  $self->new_callback("exec", sub {
                                    my($self, @args) = @_;
-                                   # anything execute to do...
-                                   $self->anything_execute(@args);
+								   # anything execute to do...
+								   $self->anything_execute(@args);
                                });
-      $self->maybe::next::method(@argv);
+      $self->>maybe::next::method(@argv);
   }
   
   sub run {
@@ -51,7 +51,7 @@ App::CLI::Extension::Component::InstallCallback - for App::CLI::Extension instal
           $self->exec_callback($runmode, @args);
       } else {
           die "invalid runmode!!";
-      }
+	  }
   }
   
   # myapp
@@ -73,11 +73,10 @@ App::CLI::Extension::Component::InstallCallback - for App::CLI::Extension instal
 =cut
 
 use strict;
-use 5.008;
 use base qw(Class::Data::Accessor);
 
 __PACKAGE__->mk_classaccessor( "_install_callback" => {} );
-our $VERSION  = '1.1';
+our $VERSION  = '1.2';
 
 sub new_callback {
 
@@ -98,7 +97,7 @@ sub add_callback {
 	if(ref($callback) ne "CODE") {
 		die "\$callback is not CODE";
 	}
-	push @{$self->_install_callback->{$install}}, $callback;
+    push @{$self->_install_callback->{$install}}, $callback;
 }
 
 sub exec_callback {
@@ -112,7 +111,7 @@ sub exec_callback {
 
 sub exists_callback {
 
-	my($self, $install) = @_;
+    my($self, $install) = @_;
 	return exists $self->_install_callback->{$install} ? 1 : 0;
 }
 

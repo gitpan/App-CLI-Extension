@@ -8,7 +8,7 @@ App::CLI::Extension - for App::CLI extension module
 
 =head1 VERSION
 
-1.2
+1.21
 
 =head1 SYNOPSIS
 
@@ -121,7 +121,7 @@ use strict;
 use base qw(App::CLI Class::Data::Accessor);
 use UNIVERSAL::require;
 
-our $VERSION    = '1.2';
+our $VERSION    = '1.21';
 our @COMPONENTS = qw(
 					Config
 					ErrorHandler
@@ -521,7 +521,7 @@ program last phase. By default, the exit will be executed automatically, exit if
 
 =head2 fail
 
-error phase. default error exit value is 255. if you want to change exit_value, see exit_value manual
+error phase. default errstr exit value is 255. if you want to change exit_value, see exit_value manual
 
 =cut
 

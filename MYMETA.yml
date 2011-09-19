@@ -20,8 +20,9 @@ no_index:
     - inc
 requires:
   App::CLI: 0
+  Class::Accessor::Grouped: 0
   Error: 0
   Filter::Util::Call: 0
   MRO::Compat: 0
   UNIVERSAL::require: 0
-version: 1.41
+version: 1.42

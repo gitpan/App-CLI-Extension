@@ -1,0 +1,46 @@
+{
+   "abstract" : "for App::CLI extension module",
+   "author" : [
+      "Akira Horimoto"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "ExtUtils::MakeMaker version 6.59, CPAN::Meta::Converter version 2.112600",
+   "license" : [
+      "unknown"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "App-CLI-Extension",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "inc"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.42",
+            "Test::More" : 0
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : 0
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "App::CLI" : 0,
+            "Error" : 0,
+            "Filter::Util::Call" : 0,
+            "MRO::Compat" : 0,
+            "UNIVERSAL::require" : 0
+         }
+      }
+   },
+   "release_status" : "stable",
+   "version" : "1.4"
+}

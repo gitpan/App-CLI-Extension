@@ -27,8 +27,9 @@ lib/App/CLI/Extension/Component/RunCommand.pm
 lib/App/CLI/Extension/Component/Stash.pm
 lib/App/CLI/Extension/Exception.pm
 Makefile.PL
-MANIFEST
-META.yml
+MANIFEST			This list of files
+MYMETA.json
+MYMETA.yml
 README
 t/00_compile.t
 t/01_plugin.t
@@ -48,10 +49,10 @@ t/14_callback.t
 t/15_non_finished.t
 t/16_finished.t
 t/lib/MyApp.pm
-t/lib/MyApp/Argv0Test.pm
+t/lib/MyApp/ArgvTest.pm
 t/lib/MyApp/CmdlineTest.pm
 t/lib/MyApp/ConfigTest.pm
-t/lib/MyApp/FullArgv0Test.pm
+t/lib/MyApp/FullArgvTest.pm
 t/lib/MyApp/Help.pm
 t/lib/MyApp/OrigArgvTest.pm
 t/lib/MyApp/Plugin/Greeting.pm
@@ -84,4 +85,3 @@ xt/perlcritic.t
 xt/perlcriticrc
 xt/pod.t
 xt/podspell.t
-SIGNATURE                                Public-key signature (added by MakeMaker)

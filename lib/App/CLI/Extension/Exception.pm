@@ -8,14 +8,14 @@ App::CLI::Extension::Exception - for App::CLI exception module
 
 =head1 VERSION
 
-1.4
+1.41
 
 =cut
 
 use strict;
 use base qw(Error::Simple);
 
-our $VERSION = '1.4';
+our $VERSION = '1.41';
 
 sub new {
 
